@@ -278,23 +278,58 @@
 
 </body>
 </html>
-<audio id="musik" autoplay loop>
-        <source src="tombol.innerHTML" type ="audio/mpeg">
-        Browser Anda Tidak Mendukung Audio.
-        </audio>
+<!-- Pemutar musik YouTube -->
+    <div id="player"></div>
+
+    <!-- Tombol musik -->
     <button onclick="toggleMusik()" id="tombolMusik">
-    🔇 
-</button>
+        🔇
+    </button>
 
-<script>
-function toggleMusik() {
-    const musik = document.getElementById("musik");
-    const tombol = document.getElementById("tombolMusik");
+    <!-- YouTube API -->
+    <script src="https://youtu.be/ecSsQt9gcHM?si=kyDotk2vsc_0wCXU"></script>
 
-    if (musik.paused) {
-        musik.play();
-        tombol.innerHTML = "🔇";
-    } else {
-        musik.pause();
-        tombol.innerHTML = "🔊 ";
+    <script>
+    let player;
+    let musikAktif = false;
+
+    // Membuat pemutar YouTube
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+            height: '0',
+            width: '0',
+            videoId: 'r9L4AseD-aA',
+
+            playerVars: {
+                autoplay: 1,
+                loop: 1,
+                playlist: 'r9L4AseD-aA'
+            },
+
+            events: {
+                onReady: function(event) {
+                    event.target.setVolume(50);
+                }
+            }
+        });
     }
+
+    // Fungsi tombol musik ON/OFF
+    function toggleMusik() {
+        const tombol = document.getElementById("tombolMusik");
+
+        if (!player) {
+            return;
+        }
+
+        if (!musikAktif) {
+            player.playVideo();
+            tombol.innerHTML = "🔊";
+            musikAktif = true;
+        } else {
+            player.pauseVideo();
+            tombol.innerHTML = "🔇";
+            musikAktif = false;
+        }
+    }
+    </script>
