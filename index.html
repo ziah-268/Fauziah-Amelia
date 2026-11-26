@@ -162,6 +162,60 @@
         <a href="#informasi">Informasi</a>
     </nav>
 <!-- Pemutar musik YouTube -->
+    <div id="player"></div>
+
+    <!-- Tombol musik -->
+    <button onclick="toggleMusik()" id="tombolMusik">
+        🔇
+    </button>
+
+    <!-- YouTube API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+
+    <script>
+    let player;
+    let musikAktif = false;
+
+    // Membuat pemutar YouTube
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+            height: '0',
+            width: '0',
+            videoId: 'ecSsQt9gcHM',
+
+            playerVars: {
+                autoplay: 1,
+                loop: 1,
+                playlist: 'ecSsQt9gcHM'
+            },
+
+            events: {
+                onReady: function(event) {
+                    event.target.setVolume(50);
+                }
+            }
+        });
+    }
+
+    // Fungsi tombol musik ON/OFF
+    function toggleMusik() {
+        const tombol = document.getElementById("tombolMusik");
+
+        if (!player) {
+            return;
+        }
+
+        if (!musikAktif) {
+            player.playVideo();
+            tombol.innerHTML = "🔊";
+            musikAktif = true;
+        } else {
+            player.pauseVideo();
+            tombol.innerHTML = "🔇";
+            musikAktif = false;
+        }
+    }
+    </script>
 
     <!-- BERANDA -->
     <section id="beranda">
